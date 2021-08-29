@@ -1,3 +1,1 @@
-# devops-netology
-#Artem Erohin
-#aierohin@yandex.ru
+https://github.com/aierohin/devops-netology.git
