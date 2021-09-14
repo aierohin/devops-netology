@@ -1,87 +1,83 @@
-1.	Это встроенная команда. Она базовая для работы, без нее не получилось бы перемещаться между 
-	директориями, соответственно, производить действия с другими папками и файлами.
-	
-2.	wc -l < <(grep <some_string> <some_file>)
+1. chdir("/tmp")                           = 0
 
-3.	init splash
-	Доработка задания - 20.04.1-Ubuntu SMP
-	htop показал init splash
-	top показал systemd
+2. strace -tt -e trace=openat file /bin/bash
+14:34:17.360031 openat(AT_FDCWD, "/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3
+14:34:17.373264 openat(AT_FDCWD, "/usr/lib/locale/locale-archive", O_RDONLY|O_CLOEXEC) = 3
+14:34:17.374005 openat(AT_FDCWD, "/etc/magic", O_RDONLY) = 3
+14:34:17.374351 openat(AT_FDCWD, "/usr/share/misc/magic.mgc", O_RDONLY) = 3
+14:34:17.374854 openat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/gconv/gconv-modules.cache", O_RDONLY) = 3
+14:34:17.375247 openat(AT_FDCWD, "/bin/bash", O_RDONLY|O_NONBLOCK) = 3
 
-4.	1 session:
 
-	~$ ls safhal 2>/dev/pts/1 
-	~$ tty 
-	/dev/pts/0
+3. >название_файла
 
-	2 session:
+4. Нет, не занимают. Информация о них будет видна в списке процессов, но это завершенный процесс.
 
-	~$ ls: cannot access 'safhal': No such file or directory 
-	~$tty 
-	/dev/pts/1 
+5. ~$ strace -tt -e trace=openat dpkg -L bpfcc-tools | grep sbin/opensnoop
+12:25:06.117205 openat(AT_FDCWD, "/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3
+12:25:06.117673 openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libselinux.so.1", O_RDONLY|O_CLOEXEC) = 3
+12:25:06.118317 openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libc.so.6", O_RDONLY|O_CLOEXEC) = 3
+12:25:06.119308 openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libpcre2-8.so.0", O_RDONLY|O_CLOEXEC) = 3
+12:25:06.119740 openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libdl.so.2", O_RDONLY|O_CLOEXEC) = 3
+12:25:06.120278 openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libpthread.so.0", O_RDONLY|O_CLOEXEC) = 3
+12:25:06.122095 openat(AT_FDCWD, "/proc/filesystems", O_RDONLY|O_CLOEXEC) = 3
+12:25:06.125731 openat(AT_FDCWD, "/usr/lib/locale/locale-archive", O_RDONLY|O_CLOEXEC) = 3
+12:25:06.126180 openat(AT_FDCWD, "/etc/dpkg/dpkg.cfg.d", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+12:25:06.126479 openat(AT_FDCWD, "/etc/dpkg/dpkg.cfg.d/pkg-config-hook-config", O_RDONLY) = 3
+12:25:06.126916 openat(AT_FDCWD, "/etc/dpkg/dpkg.cfg", O_RDONLY) = 3
+12:25:06.127298 openat(AT_FDCWD, "/home/artem/.dpkg.cfg", O_RDONLY) = -1 ENOENT (No such file or directory)
+12:25:06.131128 openat(AT_FDCWD, "/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3
+12:25:06.131468 openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libc.so.6", O_RDONLY|O_CLOEXEC) = 3
+12:25:06.132984 openat(AT_FDCWD, "/usr/lib/locale/locale-archive", O_RDONLY|O_CLOEXEC) = 3
+12:25:06.136040 openat(AT_FDCWD, "/var/lib/dpkg/arch", O_RDONLY) = 3
+12:25:06.136418 openat(AT_FDCWD, "/var/lib/dpkg/status", O_RDONLY) = 3
+12:25:06.197741 openat(AT_FDCWD, "/var/lib/dpkg/updates/", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+12:25:06.198150 openat(AT_FDCWD, "/var/lib/dpkg/triggers/File", O_RDONLY) = 3
+12:25:06.198831 openat(AT_FDCWD, "/var/lib/dpkg/triggers/Unincorp", O_RDONLY) = 3
+12:25:06.199129 openat(AT_FDCWD, "/var/lib/dpkg/info/format", O_RDONLY) = 4
+12:25:06.199483 openat(AT_FDCWD, "/var/lib/dpkg/info/bpfcc-tools.list", O_RDONLY) = 4
+12:25:06.200842 openat(AT_FDCWD, "/var/lib/dpkg/diversions", O_RDONLY) = 4
+/usr/sbin/opensnoop-bpfcc
+12:25:06.201816 openat(AT_FDCWD, "/usr/share/locale/locale.alias", O_RDONLY|O_CLOEXEC) = 5
+12:25:06.202303 openat(AT_FDCWD, "/usr/share/locale/en_US.UTF-8/LC_MESSAGES/dpkg.mo", O_RDONLY) = -1 ENOENT (No such file or directory)
+12:25:06.202519 openat(AT_FDCWD, "/usr/share/locale/en_US.utf8/LC_MESSAGES/dpkg.mo", O_RDONLY) = -1 ENOENT (No such file or directory)
+12:25:06.202743 openat(AT_FDCWD, "/usr/share/locale/en_US/LC_MESSAGES/dpkg.mo", O_RDONLY) = -1 ENOENT (No such file or directory)
+12:25:06.202930 openat(AT_FDCWD, "/usr/share/locale/en.UTF-8/LC_MESSAGES/dpkg.mo", O_RDONLY) = -1 ENOENT (No such file or directory)
+12:25:06.203159 openat(AT_FDCWD, "/usr/share/locale/en.utf8/LC_MESSAGES/dpkg.mo", O_RDONLY) = -1 ENOENT (No such file or directory)
+12:25:06.203344 openat(AT_FDCWD, "/usr/share/locale/en/LC_MESSAGES/dpkg.mo", O_RDONLY) = -1 ENOENT (No such file or directory)
+12:25:06.203528 openat(AT_FDCWD, "/usr/share/locale-langpack/en_US.UTF-8/LC_MESSAGES/dpkg.mo", O_RDONLY) = -1 ENOENT (No such file or directory)
+12:25:06.203759 openat(AT_FDCWD, "/usr/share/locale-langpack/en_US.utf8/LC_MESSAGES/dpkg.mo", O_RDONLY) = -1 ENOENT (No such file or directory)
+12:25:06.203977 openat(AT_FDCWD, "/usr/share/locale-langpack/en_US/LC_MESSAGES/dpkg.mo", O_RDONLY) = -1 ENOENT (No such file or directory)
+12:25:06.204183 openat(AT_FDCWD, "/usr/share/locale-langpack/en.UTF-8/LC_MESSAGES/dpkg.mo", O_RDONLY) = -1 ENOENT (No such file or directory)
+12:25:06.204370 openat(AT_FDCWD, "/usr/share/locale-langpack/en.utf8/LC_MESSAGES/dpkg.mo", O_RDONLY) = -1 ENOENT (No such file or directory)
+12:25:06.204568 openat(AT_FDCWD, "/usr/share/locale-langpack/en/LC_MESSAGES/dpkg.mo", O_RDONLY) = -1 ENOENT (No such file or directory)
 
-5.	~$ cat test1
-	rtyfghcvb
-	~$ cat test2
-	12345678
-	~$ cat test1 >test2
-	~$ cat test2
-	rtyfghcvb
-	Доработка задания:
-	artem@artem-VirtualBox:~$ cat test1
-	gfkshgi
-	artem@artem-VirtualBox:~$ cat test2
-	123456
-	artem@artem-VirtualBox:~$ (cat < test1) > test2
-	artem@artem-VirtualBox:~$ cat test2
-	gfkshgi
 
-	
+6. вызов uname, 
+Part of the utsname information is also accessible 
+via /proc/sys/kernel/{ostype, hostname, osrelease, version, domainname}
 
-6. Думаю, да. Если перенаправить выходной поток данных PTY на вход TTY.
+7. Оператор точка с запятой позволяет запускать несколько команд за один раз, и выполнение команды происходит последовательно.
+Оператор AND (&&) будет выполнять вторую команду только в том случае, если при выполнении первой команды SUCCEEDS, 
+т.е. состояние выхода первой команды равно «0» — программа выполнена успешно. Эта команда очень полезна при проверке 
+состояния выполнения последней команды.
 
-7. echo netology > /proc/$$/fd/5 - перенаправляем вывод на 5 дискриптор,
-	а bash 5>&1 перенаправляет вывод на дискриптор 1(stdout).
-	
-8. Да, поменяв стандартные потоки местами через промежуточный новый дескриптор.
-   Доработка задания:
-   ls 1>5	
-   bash 1<5
-   ls 2>&1 
-   ls -kfhfge | cat
-ls: invalid option -- 'e'
-Try 'ls --help' for more information.
+set -e и && - аналоги, нет смысла исползовать оба варианта одновременно.
 
+8. -e  Exit immediately if a command exits with a non-zero status.
+   -u  Treat unset variables as an error when substituting.
+   -x  Print commands and their arguments as they are executed.
+   -o  pipefail     the return value of a pipeline is the status of
+                    the last command to exit with a non-zero status,
+                    or zero if no command exited with a non-zero status
+   set -euxo pipefail С ее помощью, можно значительно повысить безопасность.
    
-9. cat /proc/$$/environ - выводит содержимое, также можно вывести через head: head /proc/$$/environ, вывод одинаковый.
-	Доработка задания - спасибо, буду знать, что можно через env.
-
-10. /proc/<PID>/cmdline - параметры загрузки PID
-    /proc/<PID>/exe - символьная ссылка на абсолютную директорию запущенного бинарного файла
-
-11. sse4_2 Нужно в cat /proc/cpuinfo , в строке flags посмотреть sse.
-
-12. При использовании Vagrant с Ubuntu получается ошибка, чтобы ее пофиксить нужно
-	просто вставить это в свой файл Vagrant в качестве первого поставщика:
-
-	config.vm.provision "fix-no-tty", type: "shell" do |s|
-	s.privileged = false
-		s.inline = "sudo sed -i '/tty/!s/mesg n/tty -s \\&\\& mesg n/' /root/.profile"
-	end
-
-	Проблема возникает из-за того, что профиль Ubuntu поумолчанию /root/.содержит строку, которая предотвращает запись
-	сообщений на консоль root другими пользователями. Эта команда "mesg n" завершается неудачно, потому что она должна
-	выполняться с интерактивного терминала (tty), а не со скриптом.
-
-	Приведенный выше код просто заменяет исходную строку в /root/.profile на строку, которая проверяет, является ли текущий
-	терминал tty, прежде чем запускать команду "mesg n". Он устанавливает привилегированную опцию поставщика оболочки в 
-	значение false, чтобы мы не получали ошибку во время этого поставщика, и вместо этого использует sudo для получения 
-	соответствующих привилегий.
-	
-	Доработка задания - спасибо за подсказку:
-	Принудительное распределение псевдотерминалов. Это может быть использовано для выполнения произвольных   экранных программ на удаленной машине, что может быть очень полезно, например, при реализации служб меню.
-Параметры с несколькими t принудительно выделяют tty, даже если ssh не имеет локального tty.
-	
-13.	sudo reptyr -T 32305
-
-14.	Тее позволяет записывать выводы команд в файлы, а не перенаправлять.	
+9. Наиболее часто встречающийся статус у процессов в системе - S.
+   
+   Дополнительные символы:
+               <    high-priority (not nice to other users)
+               N    low-priority (nice to other users)
+               L    has pages locked into memory (for real-time and custom IO)
+               s    is a session leader
+               l    is multi-threaded (using CLONE_THREAD, like NPTL pthreads do)
+               +    is in the foreground process group
