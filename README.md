@@ -1,58 +1,64 @@
-1.  - sudo systemctl enable node_exporter  
-	- [Unit]  
-	Description=Node Exporter Service  
-	After=network.target  
-	After=remote-fs.target nss-user-lookup.target  
-
-	[Service]  
-	User=erohin  
-	Group=erohin  
-	Type=simple  
-	ExecStart=/usr/local/bin/node_exporter  
-	ExecReload=/bin/kill -HUP $MAINPID  
-	Restart=on-failure  
-
-	[Install]  
-	WantedBy=multi-user.target  
-
-2. 	rate(node_cpu_seconds_total{mode="system"}[1m])	  
-	node_filesystem_avail_bytes	  
-	rate(node_network_receive_bytes_total[1m])  
-3. 	cpu  
-Total CPU utilization (all cores).  
-	load  
-Current system load, i.e. the number of processes using CPU or waiting for system resources (usually CPU and disk).   
-	disk  
-Total Disk I/O, for all physical disks.  
-	ram  
-System Random Access Memory (i.e. physical memory) usage.  
-	swap  
-System swap memory usage.   
-	network  
-Total bandwidth of all physical network interfaces.   
-
-4. Да, можно:   
-[   22.288274] 21:03:59.032801 main     VBoxService 6.1.16_Ubuntu r140961 (verbosity: 0) linux.amd64 (Apr 29 2021 15:42:15) release log  
-               21:03:  
-[   22.288872] 21:03:59.034433 main     OS Product: Linux  
-[   22.289499] 21:03:59.034924 main     OS Release: 5.11.0-34-generic  
-[   22.290557] 21:03:59.035574 main     OS Version: #36~20.04.1-Ubuntu SMP Fri Aug 27 08:06:32 UTC 2021  
-[   22.291970] 21:03:59.036614 main     Executable: /usr/sbin/VBoxService  
-               21:03:59.036615 main     Process ID: 754  
-
-
-5. fs.nr_open = 1048576. Это системное ограничение на открытые файлы.  
-   Утилита ulimit возвращает два вида ограничений - hard и soft. Ограничение soft вы можете менять в любую сторону,    
-   пока оно не превышает hard. Ограничение hard можно менять только в меньшую сторону от имени обычного пользователя.    
-   От имени суперпользователя можно менять оба вида ограничений так, как нужно.   
-   -S отображаются soft-ограничения:  
-   ulimit -S  
-
-   Чтобы вывести hard, используйте опцию -H:  
-   ulimit -H  
-   
-6. $ nsenter --target 3629 --pid --mount  
-root@artem-VirtualBox:/# ps aux  
-USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND  
-root           1  0.0  0.0  16716   580 pts/0    S+   00:14   0:00 sleep 1h  
-7. Система зависла, не восстановилась в течение часа.  
+1. 	Linux:  
+	ip -br link   
+	lo               UNKNOWN        00:00:00:00:00:00 <LOOPBACK,UP,LOWER_UP>   
+	eth0             UP             9a:13:28:75:56:09 <BROADCAST,MULTICAST,UP,LOWER_UP>   
+	  
+	Windows:  
+	ipconfig /all  
+	  
+2.	lldp, lldpd, lldpctl  
+  
+3. vlan,   
+	nano /etc/network/interfaces  
+	auto vlan100  
+	iface vlan100 inet static  
+	address 192.168.1.1          
+	netmask 255.255.255.0          
+	vlan_raw_device eth0  
+	
+4.	Типы LAG:  
+	●статический (на Cisco mode on);  
+	●динамический – LACP протокол (на Cisco mode active)  
+	  
+	auto bond0  
+iface bond0 inet manual  
+        bond-slaves eno1 eno2  
+$# bond-mode 4 = 802.3ad  
+        bond-mode 4  
+        bond-miimon 100  
+        bond-downdelay 200  
+        bond-updelay 200  
+        bond-lacp-rate 1  
+        bond-xmit-hash-policy layer2+3  
+        up ifconfig bond0 0.0.0.0 up  
+  
+auto bond0.123  
+iface bond0.123 inet static  
+        address 10.123.0.3  
+        netmask 255.255.255.0  
+        mtu 1500  
+        gateway 10.123.0.1  
+        vlan-raw-device bond0  
+        post-up ifconfig bond0.123 mtu 1500  
+		  
+5.	8 адресов, 2 зарезервированно(адрес сети и бродкаст), 6 можно использовать для хостов.  
+	32 сети /29  
+	10.10.10.0/29, 10.10.10.8/29, 10.10.10.16/29  
+	  
+6.	1. Requested size: 50 hosts  
+	Netmask:   255.255.255.192 = 26 11111111.11111111.11111111.11 000000  
+	Network:   100.64.0.0/26        01100100.01000000.00000000.00 000000  
+	HostMin:   100.64.0.1           01100100.01000000.00000000.00 000001  
+	HostMax:   100.64.0.62          01100100.01000000.00000000.00 111110  
+	Broadcast: 100.64.0.63          01100100.01000000.00000000.00 111111  
+	Hosts/Net: 62                    Class A  
+	  
+7.	Linux:  
+	arp -n  
+	Address                  HWtype  HWaddress           Flags Mask            Iface  
+	172.16.254.1             ether   02:63:e7:d8:d6:89   C                     eth0  
+	  
+	arp -d address   
+	  
+	Windows:  
+	netsh interface ip delete arpcache  
