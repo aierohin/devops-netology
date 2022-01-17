@@ -1,27 +1,18 @@
-# Домашнее задание к занятию "7.1. Инфраструктура как код"  
+# Домашнее задание к занятию "7.2. Облачные провайдеры и синтаксис Terraform."  
   
 ## Обязательные задания  
   
-Задание 1:
-1. Для этого проекта будем использовать неизменяемый тип инфраструктуры.
-2. Центрального сервера для управления инфраструктурой не будет.
-3. Агентов на серверах не будет.
-4. Будут использованы средства для управления конфигурацией или инициализации ресурсов.
+Задание 1:  
+VirtualBox:/usr/local/tf/13$ yc config list  
+token: AQAAfadghhaoihwoghohgFrNSNHLLi1CI  
+cloud-id: b1jsgbfoegfoaqj2v  
+folder-id: b1gjsbgegohwi8gu0  
 
 
-Задание 2:  
-VirtualBox:/$ terraform --version
-Terraform v1.1.3
-on linux_amd64
+Задание 2:    
+1. С помощью Packer можно собрать образ.  
+![image](https://user-images.githubusercontent.com/88886716/149754471-273912d5-e622-4498-916e-bafb55c748e9.png)
 
-
-Задание 3:  
-erohin@erohin-VirtualBox:/usr/local/tf/13$ terraform12 --version  
-Terraform v0.12.31  
-Your version of Terraform is out of date! The latest version  
-is 1.1.3. You can update by downloading from https://www.terraform.io/downloads.html  
-erohin@erohin-VirtualBox:/usr/local/tf/13$ terraform13 --version  
-Terraform v0.13.7  
-Your version of Terraform is out of date! The latest version  
-is 1.1.3. You can update by downloading from https://www.terraform.io/downloads.html  
+     
+2. Ранее делали ДЗ с terraform из конфигурации - https://github.com/aierohin/HW_netology/tree/virt-11/05-virt-04-docker-compose/src/terraform  
  
